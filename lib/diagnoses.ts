@@ -1,3 +1,5 @@
+import { loveCharacters } from "./loveCharacters";
+
 export type DiagnosisChoice = { label: string; point: number };
 export type DiagnosisQuestion = { text: string; choices: DiagnosisChoice[] };
 export type DiagnosisType = {
@@ -32,25 +34,6 @@ const choices: DiagnosisChoice[] = [
 
 const makeQuestions = (items: string[]) => items.map((text) => ({ text, choices }));
 
-const lineLoveTypes = [
-  { code: "WINO", characterName: "Noa", title: "静かに待ちすぎる片思いさん", features: "相手からの返信を待ちながら、ひとりで不安を抱えやすいタイプ。「もう送らない方がいいかな」と思いながら、本当はこのまま終わるのが怖い。", message: "待てる優しさがあるぶん、自分の気持ちを後回しにしすぎないで。", lineTrouble: "返信待ちの時間が長くなるほど、送らない選択と終わりへの不安の間で揺れやすいです。", lessonIds: [1, 2, 8, 13, 15] },
-  { code: "WINS", characterName: "Luca", title: "不安を抱えながら整えようとする人", features: "不安にはなるけど、すぐにぶつけずに一度考えられるタイプ。恋愛になると揺れるけど、少しずつ自分を整える力がある。", message: "焦らなくて大丈夫。あなたはちゃんと、崩れない恋愛に近づいてる。", lineTrouble: "不安を抱えたまま考え込む時間はありますが、勢いで送る前に立ち止まりやすいです。", lessonIds: [1, 2, 5, 8, 15] },
-  { code: "WIPO", characterName: "Milo", title: "考えすぎて動けなくなる人", features: "何を送るか考えすぎて、結局送れなくなるタイプ。相手にどう思われるかを先に考えて、自分の本音を隠しやすい。", message: "完璧なLINEじゃなくていい。自然に返せる一文からで大丈夫。", lineTrouble: "文面を何度も作り直しているうちに、返すタイミングごと失いやすいです。", lessonIds: [2, 4, 6, 8, 12] },
-  { code: "WIPS", characterName: "Sena", title: "ゆっくり距離を縮める慎重派", features: "慎重だけど、ただ待つだけではなく、ちゃんと進め方を考えられるタイプ。急がずに距離を縮めたい人。", message: "あなたの慎重さは弱さじゃなくて、関係を大事にする力。", lineTrouble: "進みたい気持ちはあるのに、相手のペースを読みすぎて一歩が遅くなりやすいです。", lessonIds: [2, 6, 9, 12, 15] },
-  { code: "WCNO", characterName: "Ema", title: "確認したいけど我慢する人", features: "本当は「どう思ってる？」と聞きたいけど、重いと思われたくなくて我慢するタイプ。気持ちを飲み込みすぎて、夜に苦しくなりやすい。", message: "確認したくなるのは悪いことじゃない。言葉の形を整えればいいだけ。", lineTrouble: "聞きたいことを飲み込むほど、夜に既読や返信の温度を何度も見返しやすいです。", lessonIds: [1, 3, 4, 8, 13] },
-  { code: "WCNS", characterName: "Rito", title: "不安を言葉にする前に整えられる人", features: "不安になるけど、すぐに相手へぶつける前に一度立ち止まれるタイプ。確認欲とやさしさのバランスを取ろうとしている。", message: "その一呼吸が、恋愛を少しラクにしてくれる。", lineTrouble: "確認したい気持ちは出ますが、相手が受け取りやすい形を探してから送れます。", lessonIds: [1, 3, 5, 8, 14] },
-  { code: "WCPO", characterName: "Nico", title: "返事で気持ちを測りがちな人", features: "返信速度や文の短さで「脈あり・脈なし」を判断しやすいタイプ。相手のLINEひとつで気分が大きく揺れやすい。", message: "返信の速さだけで、あなたの価値も関係の全部も決まらない。", lineTrouble: "返信の速さ、絵文字、文量を読みすぎて、気分が相手の通知に左右されやすいです。", lessonIds: [1, 3, 8, 10, 13] },
-  { code: "WCPS", characterName: "Yura", title: "確認欲を整えながら進める人", features: "不安も確認したい気持ちもあるけど、関係を壊さない言い方を探せるタイプ。ちゃんと進めたい気持ちが強い。", message: "不安があるままでも、整えながら前に進める。", lineTrouble: "確認したい時ほど言い方を選ぶので、関係を壊さず次の会話につなげやすいです。", lessonIds: [3, 5, 8, 10, 14] },
-  { code: "AINO", characterName: "Kai", title: "勢いで送ったあと不安になる人", features: "その時の気持ちで送れるけど、送ったあとに「重かったかな」と見返しやすいタイプ。素直さがあるぶん、あとから不安が追いかけてくる。", message: "送れる力はある。あとは、送る前の一呼吸を足すだけ。", lineTrouble: "送信までは早いのに、送った直後から文面を見返して不安が強まりやすいです。", lessonIds: [1, 2, 3, 5, 7] },
-  { code: "AINS", characterName: "Moca", title: "自分から動けるけど丁寧な人", features: "自分から動けるけど、相手への負担も考えられるタイプ。自然体で距離を縮めるのが得意になれる人。", message: "あなたの素直さは、ちゃんと整えれば魅力になる。", lineTrouble: "自分から話題を出せるので、軽い一文や自然な誘いに変えられると距離が縮まりやすいです。", lessonIds: [2, 5, 6, 7, 10] },
-  { code: "AIPO", characterName: "Leo", title: "追いLINE寸前で迷う人", features: "関係を進めたい気持ちはあるけど、相手の反応が気になって迷いやすいタイプ。送るか待つかで、心が忙しくなりやすい。", message: "動きたい気持ちは悪くない。焦りではなく、会話になる形に変えよう。", lineTrouble: "もう一通送るか待つかで揺れて、会話の目的より不安の解消が前に出やすいです。", lessonIds: [2, 3, 4, 7, 10] },
-  { code: "AIPS", characterName: "Rin", title: "動きながら距離感を整える人", features: "自分から動きつつ、相手との距離感も見ようとできるタイプ。恋愛で不安になることはあっても、学びながら進める。", message: "あなたは、追いすぎずに進める力を育てていける。", lineTrouble: "自分から動けるぶん、送る頻度と相手の返しやすさを調整できると安定します。", lessonIds: [4, 6, 7, 10, 12] },
-  { code: "ACNO", characterName: "Haru", title: "好きが出すぎて確認したくなる人", features: "好きになると、相手の気持ちをすぐ知りたくなるタイプ。「どう思ってる？」を聞きたいけど、重いと思われるのが怖い。", message: "好きが大きいだけ。責める形じゃなく、伝わる形に整えよう。", lineTrouble: "好きな気持ちが大きいほど、確認したい文が長くなったり重く見えたりしやすいです。", lessonIds: [1, 3, 4, 11, 14] },
-  { code: "ACNS", characterName: "Sora", title: "素直だけど重くならない工夫ができる人", features: "気持ちは出せるけど、自分の伝え方も見直せるタイプ。素直さと落ち着きのバランスが取れるようになる人。", message: "素直な気持ちは、言い方を整えるだけでちゃんと届きやすくなる。", lineTrouble: "本音を出しながらも、相手が返しやすい短さや温度に整えられます。", lessonIds: [3, 5, 7, 11, 14] },
-  { code: "ACPO", characterName: "Rei", title: "不安で空回りしやすい人", features: "関係を進めたい気持ちが強く、不安になると確認や追いLINEに寄りやすいタイプ。好きだからこそ、焦りが前に出やすい。", message: "空回りしてしまうのは、ちゃんと大切にしたい気持ちがあるから。", lineTrouble: "返信がない時間に焦りが強くなり、確認、長文、追いLINEへ寄りやすいです。", lessonIds: [1, 3, 4, 7, 11] },
-  { code: "ACPS", characterName: "Yuto", title: "ちゃんと進めたい恋愛努力家", features: "不安もあるけど、関係をちゃんと育てたい気持ちが強いタイプ。学びながら、送る言葉や距離感を整えていける。", message: "あなたは、恋愛を雑にしない人。だからこそ、整え方を知れば強い。", lineTrouble: "気持ちを進めたい場面でも、言葉と距離感を見直せるので関係を育てる会話にしやすいです。", lessonIds: [5, 7, 10, 11, 14] },
-];
-
 const typeSet = {
   lineAnxiety: [
     ["動けない慎重タイプ", "考えすぎて送れなくなりやすい状態です。言葉を選べる丁寧さがある一方、正解探しで疲れやすくなっています。", "相手を雑に扱わない優しさと、関係を大切にしたい誠実さがあります。", "完璧な文より、短く返しやすい一文を作る練習をしましょう。"],
@@ -84,20 +67,20 @@ const typeSet = {
   ],
 };
 
-const buildLineLoveTypes = (): DiagnosisType[] => lineLoveTypes.map((item) => ({
+const buildLineLoveTypes = (): DiagnosisType[] => loveCharacters.map((item) => ({
   min: 0,
   max: 40,
-  name: `${item.code} ${item.characterName}`,
+  name: `${item.code} ${item.name}`,
   code: item.code,
-  characterName: item.characterName,
+  characterName: item.name,
   title: item.title,
-  features: item.features,
-  message: item.message,
-  lineTrouble: item.lineTrouble,
-  goodSide: item.message,
-  todo: item.lineTrouble,
-  roadmap: item.code.endsWith("S") ? "Month 2：距離を整えながら進める" : "Month 1：不安を整える",
-  lessonIds: item.lessonIds,
+  features: item.description,
+  message: item.catchCopy,
+  lineTrouble: item.linePattern,
+  goodSide: item.strength,
+  todo: item.beforeSendCheck,
+  roadmap: item.roadmap.join(" / "),
+  lessonIds: item.recommendedLessons,
 }));
 
 const buildTypes = (items: string[][]): DiagnosisType[] => items.map(([name, features, goodSide, todo], index) => ({
@@ -114,8 +97,8 @@ const buildTypes = (items: string[][]): DiagnosisType[] => items.map(([name, fea
 export const diagnoses: Diagnosis[] = [
   {
     slug: "love-line-type",
-    title: "恋愛LINEタイプ診断｜16タイプ",
-    description: "返信待ちや送信前の不安が、16タイプのどんな形で出やすいかを見ます。",
+    title: "恋愛キャラ診断",
+    description: "あなたの恋愛のクセを、キャラで可視化。待ち方・送り方・不安の出方から、今のあなたに出やすい恋愛キャラがわかります。",
     questions: makeQuestions(["返信が遅いと、嫌われたのかもと考える", "送る文章を何度も作って消す", "重いと思われないか心配になる", "本当は聞きたいのに我慢する", "相手の既読やオンライン状況が気になる", "返事が来るまで他のことに集中しにくい", "会話が終わると関係も終わる気がする", "追いLINEしたい気持ちを抑えることがある", "相手に合わせすぎて疲れる", "送った後に内容を何度も見返す"]),
     types: buildLineLoveTypes(),
   },

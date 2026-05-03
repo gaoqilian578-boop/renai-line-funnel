@@ -52,7 +52,9 @@ export function DiagnosisForm({ diagnosis }: { diagnosis: Diagnosis }) {
             </div>
           </Card>
         ))}
-        <Button onClick={submit} disabled={!complete} className="w-full disabled:cursor-not-allowed disabled:opacity-40">結果を見る</Button>
+        <Button onClick={submit} disabled={!complete} className="w-full disabled:cursor-not-allowed disabled:opacity-40">
+          {diagnosis.slug === "love-line-type" ? "診断して恋愛キャラを見る" : "結果を見る"}
+        </Button>
       </div>
     </Section>
   );

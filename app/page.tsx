@@ -12,13 +12,13 @@ export default function Home() {
     <>
       <Section className="bg-gradient-to-b from-cream to-[#fffdf9] pt-14">
         <div className="mx-auto max-w-3xl">
-          <p className="text-sm font-bold text-roseSoft">恋愛LINEの不安を、送れる言葉まで整える場所</p>
+          <p className="text-sm font-bold text-roseSoft">恋愛のクセを、少しラクに見られる場所</p>
           <h1 className="mt-4 text-4xl font-bold leading-[1.35] sm:text-5xl">返信が遅いだけで、何も手につかなくなる夜へ。</h1>
           <p className="mt-6 whitespace-pre-line text-lg leading-9 text-muted">
-            何送ればいいかわからない。{"\n"}重いと思われたくない。{"\n"}でも、このまま終わるのも嫌。{"\n\n"}そんな恋愛LINEの不安を、診断・講座・ロードマップで{"\n"}“送れる言葉”まで整える場所です。
+            何送ればいいかわからない。{"\n"}重いと思われたくない。{"\n"}でも、このまま終わるのも嫌。{"\n\n"}そんな夜の不安を、診断・講座・ロードマップで{"\n"}“送る前に少し落ち着ける言葉”まで整える場所です。
           </p>
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            <Button href="/diagnosis">無料診断をはじめる</Button>
+            <Button href="/diagnosis/love-line-type">恋愛キャラ診断をはじめる</Button>
             <Button href="/mini" variant="secondary">100円ミニ講座を見る</Button>
             <Button href="/column" variant="ghost">980円コラムを見る</Button>
           </div>
@@ -38,7 +38,8 @@ export default function Home() {
       </Section>
 
       <Section className="bg-cream">
-        <h2 className="text-2xl font-bold">5つの無料診断</h2>
+        <h2 className="text-2xl font-bold">無料診断</h2>
+        <p className="mt-3 max-w-2xl leading-8 text-muted">まずは恋愛キャラ診断から。待ち方・送り方・不安の出方を、保存しやすいキャラ結果で見られます。</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {diagnoses.map((diagnosis) => <DiagnosisCard key={diagnosis.slug} title={diagnosis.title} description={diagnosis.description} href={`/diagnosis/${diagnosis.slug}`} />)}
         </div>
