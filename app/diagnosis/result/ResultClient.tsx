@@ -117,8 +117,9 @@ export function ResultClient() {
 
         {detail.character ? (
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button href={getCharacterHref(detail.character)} variant="secondary">このキャラを詳しく見る</Button>
+            <Button href={getCharacterHref(detail.character)} variant="secondary">このタイプを詳しく見る</Button>
             <Button href={`${getCharacterHref(detail.character)}#compatibility`} variant="ghost">相性も見る</Button>
+            <Button href="/compatibility" variant="ghost">好きな人との相性を見る</Button>
             <Button href="/mini" variant="ghost">100円LINE整理メモを見る</Button>
             <Button href="/column" variant="ghost">場面別の例文を見る</Button>
             <Button href="/line" variant="ghost">LINEで恋の道標を見る</Button>

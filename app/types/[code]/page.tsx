@@ -22,7 +22,7 @@ export default async function TypeDetailPage({ params }: { params: Promise<{ cod
     <>
       <PageHeader
         eyebrow="恋愛キャラ診断"
-        title={"あなたのキャラ詳細"}
+        title={"あなたのタイプ詳細"}
         description={`${character.displayCode} / ${character.characterLabel}\n${character.title}`}
       />
       <Section className="pt-0">
@@ -44,7 +44,6 @@ export default async function TypeDetailPage({ params }: { params: Promise<{ cod
           <ListCard title="やめた方がいいLINE" items={character.ngExamples} tone="ng" />
           <ListCard title="あなたに合う3ヶ月ロードマップ" items={character.roadmap} tone="roadmap" />
           <CompatibilitySection character={character} />
-          <ShareTemplateSection character={character} />
 
           <Card>
             <h2 className="text-xl font-bold">おすすめ講座</h2>
@@ -59,6 +58,7 @@ export default async function TypeDetailPage({ params }: { params: Promise<{ cod
           </Card>
 
           <CTABox title="100円ミニ講座" description="今夜送るか迷っているLINEを、短いメモでいったん整えたい人へ。" primaryHref="/mini" primaryLabel="100円ミニ講座を見る" />
+          <CTABox title="好きな人との相性診断" description="自分と好きな人の恋愛キャラを並べて、すれ違いやすいポイントと距離の縮め方を見られます。" primaryHref="/compatibility" primaryLabel="好きな人との相性も見てみる" />
           <CTABox title="980円コラム" description="場面別の例文や、送る・待つの判断をもう少し深く読みたい人へ。" primaryHref="/column" primaryLabel="980円コラムを見る" />
           <CTABox title="LINE登録" description="ひとりで抱え込まず、今の状況に合わせて読み返せるヒントを受け取りたい時はこちらへ。" primaryHref="/line" primaryLabel="LINEで恋の道標を見る" />
           <CTABox title="メルマガ" description="返信待ちで不安になった夜に、少し気持ちが整う話と例文を不定期で届けます。" primaryHref="/newsletter" primaryLabel="メルマガ登録へ" />
@@ -81,9 +81,9 @@ function CompatibilitySection({ character }: { character: NonNullable<ReturnType
       <h2 className="text-xl font-bold">相性メモ</h2>
       <p className="mt-3 leading-8 text-muted">{character.compatibility.description}</p>
       <div className="mt-5 grid gap-4">
-        <CompatibilityGroup title="相性がラクなキャラ" codes={character.compatibility.easy} />
-        <CompatibilityGroup title="一緒に成長しやすいキャラ" codes={character.compatibility.growth} />
-        <CompatibilityGroup title="少し気をつけたいキャラ" codes={character.compatibility.careful} />
+        <CompatibilityGroup title="相性がラクなタイプ" codes={character.compatibility.easy} />
+        <CompatibilityGroup title="一緒に成長しやすいタイプ" codes={character.compatibility.growth} />
+        <CompatibilityGroup title="少し気をつけたいタイプ" codes={character.compatibility.careful} />
       </div>
       <p className="mt-4 rounded-xl bg-cream p-4 leading-8 text-muted">
         相性は「うまくいく・いかない」を決めるものではありません。不安の出方が噛み合いやすいか、すれ違いやすいかを見るための小さなメモです。
@@ -107,22 +107,6 @@ function CompatibilityGroup({ title, codes }: { title: string; codes: string[] }
         })}
       </div>
     </div>
-  );
-}
-
-function ShareTemplateSection({ character }: { character: NonNullable<ReturnType<typeof getLoveCharacter>> }) {
-  return (
-    <Card>
-      <h2 className="text-xl font-bold">投稿に使えるひとこと</h2>
-      <p className="mt-3 leading-8 text-muted">この文章を投稿の参考にしてOKです。ストーリーに載せる時は、スクショして短く使って大丈夫。</p>
-      <div className="mt-5 rounded-2xl bg-white p-5 shadow-soft ring-1 ring-[#f0dfd7]">
-        <p className="text-sm font-black tracking-normal text-roseSoft">{character.shareTemplate.title}</p>
-        <p className="mt-4 whitespace-pre-line text-lg font-bold leading-9 text-ink">{character.shareTemplate.body}</p>
-        <p className="mt-5 rounded-xl bg-cream p-4 leading-8 text-muted">{character.shareTemplate.saveText}</p>
-        <p className="mt-4 text-sm font-bold text-roseSoft">{character.shareTemplate.cta}</p>
-      </div>
-      <Button href="/share-templates" variant="ghost" className="mt-5 w-full">全キャラの投稿テンプレを見る</Button>
-    </Card>
   );
 }
 

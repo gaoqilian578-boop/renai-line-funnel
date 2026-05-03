@@ -9,17 +9,17 @@ export default function TypesPage() {
     <>
       <PageHeader
         title="恋愛キャラ一覧"
-        description={"待ち方、送り方、不安の出方は人それぞれ。\n自分のキャラを知ると、送る前に少し落ち着けます。"}
+        description={"待ち方、送り方、不安の出方は人それぞれ。\n自分のタイプを知ると、送る前に少し落ち着けます。"}
       />
       <Section className="pt-0">
         <div className="mx-auto max-w-3xl rounded-2xl bg-cream p-6 leading-8 text-muted">
           ここでは、恋愛中に出やすいキャラを一覧で見られます。
-          どのキャラが良い・悪いではなく、
+          どのタイプが良い・悪いではなく、
           「私はこうなりやすいんだ」と知るためのページです。
         </div>
         <div className="mx-auto mt-6 max-w-3xl">
-          <Button href="/diagnosis/love-line-type" className="w-full sm:w-auto">診断して自分のキャラを見る</Button>
-          <Button href="/share-templates" variant="ghost" className="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto">投稿テンプレを見る</Button>
+          <Button href="/diagnosis/love-line-type" className="w-full sm:w-auto">診断して自分のタイプを見る</Button>
+          <Button href="/compatibility" variant="ghost" className="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto">好きな人との相性を見る</Button>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {loveCharacters.map((character) => (

@@ -39,7 +39,7 @@ export default function Home() {
 
       <Section className="bg-cream">
         <h2 className="text-2xl font-bold">無料診断</h2>
-        <p className="mt-3 max-w-2xl leading-8 text-muted">まずは恋愛キャラ診断から。待ち方・送り方・不安の出方を、保存しやすいキャラ結果で見られます。</p>
+        <p className="mt-3 max-w-2xl leading-8 text-muted">まずは恋愛キャラ診断から。待ち方・送り方・不安の出方を、保存しやすい結果で見られます。</p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {diagnoses.map((diagnosis) => <DiagnosisCard key={diagnosis.slug} title={diagnosis.title} description={diagnosis.description} href={`/diagnosis/${diagnosis.slug}`} />)}
         </div>
@@ -68,6 +68,7 @@ export default function Home() {
         <div className="grid gap-5 lg:grid-cols-2">
           <CTABox title="返信が来ない夜に見る 100円LINE整理メモ" description="送る前に、いったんここで整えて。今夜の不安を小さく整えるスマホ用メモです。" primaryHref="/mini" primaryLabel="100円ミニ講座を見る" />
           <CTABox title="返信が遅い彼に、重くならず送るLINEの作り方" description="場面別に使える例文と、今日は送るか待つかの判断をまとめたコラムです。" primaryHref="/column" primaryLabel="980円コラムを見る" />
+          <CTABox title="好きな人との相性診断" description={"自分と好きな人の恋愛キャラを選ぶだけで、\nすれ違いやすいポイントと距離の縮め方がわかります。"} primaryHref="/compatibility" primaryLabel="相性を見てみる" />
         </div>
       </Section>
 
