@@ -70,9 +70,9 @@ const typeSet = {
 const buildLineLoveTypes = (): DiagnosisType[] => loveCharacters.map((item) => ({
   min: 0,
   max: 40,
-  name: `${item.code} ${item.name}`,
+  name: `${item.displayCode} ${item.characterLabel}`,
   code: item.code,
-  characterName: item.name,
+  characterName: item.characterLabel,
   title: item.title,
   features: item.description,
   message: item.catchCopy,

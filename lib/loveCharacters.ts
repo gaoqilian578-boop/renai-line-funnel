@@ -1,8 +1,13 @@
 export type LoveCharacter = {
   code: string;
+  displayCode: string;
+  characterLabel: string;
   name: string;
   title: string;
   catchCopy: string;
+  emotionalCopy: string;
+  shareCopy: string;
+  nightCopy: string;
   description: string;
   lovePattern: string;
   linePattern: string;
@@ -15,12 +20,27 @@ export type LoveCharacter = {
   roadmap: string[];
   recommendedLessons: number[];
   ctaText: string;
+  compatibility: {
+    easy: string[];
+    growth: string[];
+    careful: string[];
+    description: string;
+  };
+  shareTemplate: {
+    title: string;
+    body: string;
+    saveText: string;
+    cta: string;
+  };
 };
 
-export const loveCharacters: LoveCharacter[] = [
+type BaseLoveCharacter = Omit<LoveCharacter, "displayCode" | "characterLabel" | "emotionalCopy" | "shareCopy" | "nightCopy" | "compatibility" | "shareTemplate">;
+type LoveCharacterExtra = Pick<LoveCharacter, "displayCode" | "characterLabel" | "emotionalCopy" | "shareCopy" | "nightCopy" | "compatibility" | "shareTemplate">;
+
+const baseLoveCharacters: BaseLoveCharacter[] = [
   {
     code: "WINO",
-    name: "Noa",
+    name: "待ちすぎキャラ",
     title: "静かに待ちすぎる片思いさん",
     catchCopy: "待てる優しさがあるぶん、自分の気持ちを後回しにしすぎないで。",
     description: "相手からの返信を待ちながら、ひとりで不安を抱えやすいタイプ。「もう送らない方がいいかな」と思いながら、本当はこのまま終わるのが怖い。",
@@ -38,7 +58,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WINS",
-    name: "Luca",
+    name: "整え待ちキャラ",
     title: "不安を抱えながら整えようとする人",
     catchCopy: "焦らなくて大丈夫。あなたはちゃんと、崩れない恋愛に近づいてる。",
     description: "不安にはなるけど、すぐにぶつけずに一度考えられるタイプ。恋愛になると揺れるけど、少しずつ自分を整える力がある。",
@@ -56,7 +76,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WIPO",
-    name: "Milo",
+    name: "考えすぎキャラ",
     title: "考えすぎて動けなくなる人",
     catchCopy: "完璧なLINEじゃなくていい。自然に返せる一文からで大丈夫。",
     description: "何を送るか考えすぎて、結局送れなくなるタイプ。相手にどう思われるかを先に考えて、自分の本音を隠しやすい。",
@@ -74,7 +94,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WIPS",
-    name: "Sena",
+    name: "慎重キャラ",
     title: "ゆっくり距離を縮める慎重派",
     catchCopy: "あなたの慎重さは弱さじゃなくて、関係を大事にする力。",
     description: "慎重だけど、ただ待つだけではなく、ちゃんと進め方を考えられるタイプ。急がずに距離を縮めたい人。",
@@ -92,7 +112,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WCNO",
-    name: "Ema",
+    name: "飲み込みキャラ",
     title: "確認したいけど我慢する人",
     catchCopy: "確認したくなるのは悪いことじゃない。言葉の形を整えればいいだけ。",
     description: "本当は「どう思ってる？」と聞きたいけど、重いと思われたくなくて我慢するタイプ。気持ちを飲み込みすぎて、夜に苦しくなりやすい。",
@@ -110,7 +130,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WCNS",
-    name: "Rito",
+    name: "ひと呼吸キャラ",
     title: "不安を言葉にする前に整えられる人",
     catchCopy: "その一呼吸が、恋愛を少しラクにしてくれる。",
     description: "不安になるけど、すぐに相手へぶつける前に一度立ち止まれるタイプ。確認欲とやさしさのバランスを取ろうとしている。",
@@ -128,7 +148,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WCPO",
-    name: "Nico",
+    name: "読みすぎキャラ",
     title: "返事で気持ちを測りがちな人",
     catchCopy: "返信の速さだけで、あなたの価値も関係の全部も決まらない。",
     description: "返信速度や文の短さで「脈あり・脈なし」を判断しやすいタイプ。相手のLINEひとつで気分が大きく揺れやすい。",
@@ -146,7 +166,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "WCPS",
-    name: "Yura",
+    name: "距離感キャラ",
     title: "確認欲を整えながら進める人",
     catchCopy: "不安があるままでも、整えながら前に進める。",
     description: "不安も確認したい気持ちもあるけど、関係を壊さない言い方を探せるタイプ。ちゃんと進めたい気持ちが強い。",
@@ -164,7 +184,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "AINO",
-    name: "Kai",
+    name: "送って不安キャラ",
     title: "勢いで送ったあと不安になる人",
     catchCopy: "送れる力はある。あとは、送る前の一呼吸を足すだけ。",
     description: "その時の気持ちで送れるけど、送ったあとに「重かったかな」と見返しやすいタイプ。素直さがあるぶん、あとから不安が追いかけてくる。",
@@ -182,7 +202,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "AINS",
-    name: "Moca",
+    name: "一歩出るキャラ",
     title: "自分から動けるけど丁寧な人",
     catchCopy: "あなたの素直さは、ちゃんと整えれば魅力になる。",
     description: "自分から動けるけど、相手への負担も考えられるタイプ。自然体で距離を縮めるのが得意になれる人。",
@@ -200,7 +220,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "AIPO",
-    name: "Leo",
+    name: "揺れキャラ",
     title: "追いLINE寸前で迷う人",
     catchCopy: "動きたい気持ちは悪くない。焦りではなく、会話になる形に変えよう。",
     description: "関係を進めたい気持ちはあるけど、相手の反応が気になって迷いやすいタイプ。送るか待つかで、心が忙しくなりやすい。",
@@ -218,7 +238,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "AIPS",
-    name: "Rin",
+    name: "進め上手キャラ",
     title: "動きながら距離感を整える人",
     catchCopy: "あなたは、追いすぎずに進める力を育てていける。",
     description: "自分から動きつつ、相手との距離感も見ようとできるタイプ。恋愛で不安になることはあっても、学びながら進める。",
@@ -236,7 +256,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "ACNO",
-    name: "Haru",
+    name: "確認したいキャラ",
     title: "好きが出すぎて確認したくなる人",
     catchCopy: "好きが大きいだけ。責める形じゃなく、伝わる形に整えよう。",
     description: "好きになると、相手の気持ちをすぐ知りたくなるタイプ。「どう思ってる？」を聞きたいけど、重いと思われるのが怖い。",
@@ -254,7 +274,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "ACNS",
-    name: "Sora",
+    name: "素直安定キャラ",
     title: "素直だけど重くならない工夫ができる人",
     catchCopy: "素直な気持ちは、言い方を整えるだけでちゃんと届きやすくなる。",
     description: "気持ちは出せるけど、自分の伝え方も見直せるタイプ。素直さと落ち着きのバランスが取れるようになる人。",
@@ -272,7 +292,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "ACPO",
-    name: "Rei",
+    name: "空回りキャラ",
     title: "不安で空回りしやすい人",
     catchCopy: "空回りしてしまうのは、ちゃんと大切にしたい気持ちがあるから。",
     description: "関係を進めたい気持ちが強く、不安になると確認や追いLINEに寄りやすいタイプ。好きだからこそ、焦りが前に出やすい。",
@@ -290,7 +310,7 @@ export const loveCharacters: LoveCharacter[] = [
   },
   {
     code: "ACPS",
-    name: "Yuto",
+    name: "育て上手キャラ",
     title: "ちゃんと進めたい恋愛努力家",
     catchCopy: "あなたは、恋愛を雑にしない人。だからこそ、整え方を知れば強い。",
     description: "不安もあるけど、関係をちゃんと育てたい気持ちが強いタイプ。学びながら、送る言葉や距離感を整えていける。",
@@ -308,4 +328,321 @@ export const loveCharacters: LoveCharacter[] = [
   },
 ];
 
-export const getLoveCharacter = (code?: string) => loveCharacters.find((character) => character.code === code);
+const loveCharacterExtras: Record<string, LoveCharacterExtra> = {
+  WINO: {
+    displayCode: "WAIT",
+    characterLabel: "待ちすぎキャラ",
+    emotionalCopy: "待てるのはやさしさ。でも、ひとりで抱え込みすぎなくていい。",
+    shareCopy: "私はたぶん、待ちすぎキャラ。",
+    nightCopy: "返事を待っている間も、あなたの価値は減っていません。",
+    compatibility: {
+      easy: ["CALM", "EASE", "GLOW"],
+      growth: ["MOVE", "FLOW", "GROW"],
+      careful: ["LOOP", "SEEK", "READ"],
+      description: "待ちすぎキャラは、落ち着いて受け止めてくれる相手だと安心しやすいです。反対に、確認や不安が強く出る相手とは、お互いに考えすぎやすくなることがあります。",
+    },
+    shareTemplate: {
+      title: "WAIT｜待ちすぎキャラ",
+      body: "返信を待てるのは、やさしさ。\nでも、待っている間に自分だけが苦しくなっているなら、\n少しだけ整えてあげていい。",
+      saveText: "待つ恋でしんどくなりやすい人へ。",
+      cta: "あなたは何キャラだった？",
+    },
+  },
+  WINS: {
+    displayCode: "CALM",
+    characterLabel: "整え待ちキャラ",
+    emotionalCopy: "不安になっても、すぐ壊さないように整えようとする人。",
+    shareCopy: "私はたぶん、整え待ちキャラ。",
+    nightCopy: "一呼吸おけるあなたは、ちゃんと恋を大切にできています。",
+    compatibility: {
+      easy: ["EASE", "GLOW", "TACT"],
+      growth: ["MOVE", "FLOW", "GROW"],
+      careful: ["LOOP", "PING", "SEEK"],
+      description: "整え待ちキャラは、感情を急かされない関係で力を発揮しやすいです。相手の不安が強い時は、全部受け止めようとしすぎないことが大切です。",
+    },
+    shareTemplate: {
+      title: "CALM｜整え待ちキャラ",
+      body: "不安になっても、すぐにはぶつけない。\nちゃんと一度、自分の中で整えようとする。\nその落ち着きは、恋を壊さない力になる。",
+      saveText: "不安を抱えながらも整えようとする人へ。",
+      cta: "診断結果、スクショして保存してね。",
+    },
+  },
+  WIPO: {
+    displayCode: "SPIN",
+    characterLabel: "考えすぎキャラ",
+    emotionalCopy: "ちゃんと考える人ほど、送る前に止まってしまう夜がある。",
+    shareCopy: "私はたぶん、考えすぎキャラ。",
+    nightCopy: "完璧なLINEじゃなくていい。伝わる一文で大丈夫。",
+    compatibility: {
+      easy: ["WAIT", "CALM", "PACE"],
+      growth: ["EASE", "GLOW", "MOVE"],
+      careful: ["READ", "LOOP", "SWAY"],
+      description: "考えすぎキャラは、ゆっくり待ってくれる相手と安心しやすいです。読みすぎや空回りが重なると、LINEひとつでお互いに不安が大きくなることがあります。",
+    },
+    shareTemplate: {
+      title: "SPIN｜考えすぎキャラ",
+      body: "何を送るか考えて、\n消して、また考えて。\n好きだからこそ、LINEひとつが重くなる夜がある。",
+      saveText: "送る前に考えすぎる人へ。",
+      cta: "これ私かもと思ったら保存。",
+    },
+  },
+  WIPS: {
+    displayCode: "PACE",
+    characterLabel: "慎重キャラ",
+    emotionalCopy: "急がないのは、好きじゃないからじゃなくて、大事にしたいから。",
+    shareCopy: "私はたぶん、慎重キャラ。",
+    nightCopy: "ゆっくりでも、ちゃんと近づこうとしているなら大丈夫。",
+    compatibility: {
+      easy: ["WAIT", "CALM", "EASE"],
+      growth: ["FLOW", "GROW", "GLOW"],
+      careful: ["SEEK", "LOOP", "PING"],
+      description: "慎重キャラは、急がず関係を育てられる相手と相性がよいです。進展を急ぐ相手とは、ペースの違いを言葉にすることが大切です。",
+    },
+    shareTemplate: {
+      title: "PACE｜慎重キャラ",
+      body: "急がないのは、気持ちがないからじゃない。\nちゃんと大事に進めたいから。\nゆっくりでも、恋は進めていい。",
+      saveText: "慎重に恋を進めたい人へ。",
+      cta: "あなたの恋愛キャラも見てみて。",
+    },
+  },
+  WCNO: {
+    displayCode: "HUSH",
+    characterLabel: "飲み込みキャラ",
+    emotionalCopy: "言えないのは弱さじゃない。重くなりたくないくらい、大切にしてるだけ。",
+    shareCopy: "私はたぶん、飲み込みキャラ。",
+    nightCopy: "飲み込んだ気持ちも、ちゃんとあなたの本音です。",
+    compatibility: {
+      easy: ["EASE", "CALM", "GLOW"],
+      growth: ["TACT", "GROW", "MOVE"],
+      careful: ["SEEK", "LOOP", "READ"],
+      description: "飲み込みキャラは、本音を急かさず聞いてくれる相手だと安心できます。確認が強い相手には、我慢しすぎてしまわないよう注意が必要です。",
+    },
+    shareTemplate: {
+      title: "HUSH｜飲み込みキャラ",
+      body: "言いたいことがあるのに、\n重いと思われたくなくて飲み込む。\nその我慢、ちゃんと気づいてあげて。",
+      saveText: "本音を飲み込みやすい人へ。",
+      cta: "夜に見返せるように保存してね。",
+    },
+  },
+  WCNS: {
+    displayCode: "EASE",
+    characterLabel: "ひと呼吸キャラ",
+    emotionalCopy: "不安をぶつける前に、ちゃんと自分を整えようとする人。",
+    shareCopy: "私はたぶん、ひと呼吸キャラ。",
+    nightCopy: "落ち着こうとできるあなたは、もう十分がんばっています。",
+    compatibility: {
+      easy: ["CALM", "GLOW", "TACT"],
+      growth: ["WAIT", "MOVE", "GROW"],
+      careful: ["LOOP", "SWAY", "PING"],
+      description: "ひと呼吸キャラは、多くのタイプと穏やかに関係を作りやすいです。ただし、不安が強い相手を全部支えようとすると疲れやすいので、自分の気持ちも大切にしてください。",
+    },
+    shareTemplate: {
+      title: "EASE｜ひと呼吸キャラ",
+      body: "感情のまま送らない。\n一回止まって、言葉を整えられる。\nその一呼吸が、恋を少しラクにしてくれる。",
+      saveText: "送る前に立ち止まれる人へ。",
+      cta: "あなたはどのキャラだった？",
+    },
+  },
+  WCPO: {
+    displayCode: "READ",
+    characterLabel: "読みすぎキャラ",
+    emotionalCopy: "返信の短さで、気持ちまで決まった気がしてしまう人。",
+    shareCopy: "私はたぶん、読みすぎキャラ。",
+    nightCopy: "LINEの温度だけで、関係の全部を決めなくて大丈夫。",
+    compatibility: {
+      easy: ["CALM", "EASE", "TACT"],
+      growth: ["GLOW", "GROW", "FLOW"],
+      careful: ["LOOP", "SEEK", "SPIN"],
+      description: "読みすぎキャラは、言葉の温度が安定している相手だと安心しやすいです。お互いに深読みしやすい相手とは、事実に戻る会話が大切です。",
+    },
+    shareTemplate: {
+      title: "READ｜読みすぎキャラ",
+      body: "返信が短いだけで、\n前より冷たい気がしてしまう。\nでも、LINEだけで全部を決めなくていい。",
+      saveText: "返信の温度で不安になる人へ。",
+      cta: "これ私っぽいと思ったら保存。",
+    },
+  },
+  WCPS: {
+    displayCode: "TACT",
+    characterLabel: "距離感キャラ",
+    emotionalCopy: "近づきたい。でも、踏み込みすぎたくない。その間で揺れる人。",
+    shareCopy: "私はたぶん、距離感キャラ。",
+    nightCopy: "ちょうどいい距離を探せるあなたは、恋を雑にしていません。",
+    compatibility: {
+      easy: ["EASE", "GLOW", "CALM"],
+      growth: ["MOVE", "FLOW", "GROW"],
+      careful: ["SEEK", "LOOP", "HUSH"],
+      description: "距離感キャラは、相手のペースを見られるぶん、関係を整えやすいです。ただし、相手に合わせすぎると自分の本音が見えにくくなるので注意してください。",
+    },
+    shareTemplate: {
+      title: "TACT｜距離感キャラ",
+      body: "近づきたい。\nでも、踏み込みすぎたくない。\nその距離感を考えられるのは、恋を大事にしている証拠。",
+      saveText: "距離感で悩みやすい人へ。",
+      cta: "診断して自分のキャラを見る。",
+    },
+  },
+  AINO: {
+    displayCode: "PING",
+    characterLabel: "送って不安キャラ",
+    emotionalCopy: "送れる勇気はある。でも、送ったあとに自分を責めてしまう人。",
+    shareCopy: "私はたぶん、送って不安キャラ。",
+    nightCopy: "送れたことは、ちゃんと一歩です。責めなくて大丈夫。",
+    compatibility: {
+      easy: ["CALM", "EASE", "GLOW"],
+      growth: ["MOVE", "FLOW", "GROW"],
+      careful: ["LOOP", "SEEK", "READ"],
+      description: "送って不安キャラは、送った後に安心できる反応をくれる相手だと落ち着きやすいです。反応が読みにくい相手とは、送った後に自分を責めすぎない工夫が必要です。",
+    },
+    shareTemplate: {
+      title: "PING｜送って不安キャラ",
+      body: "送るまでは勢いがあるのに、\n送ったあとに急に不安になる。\nでも、送れたことはちゃんと一歩。",
+      saveText: "送った後に見返しすぎる人へ。",
+      cta: "この結果、スクショして保存してね。",
+    },
+  },
+  AINS: {
+    displayCode: "MOVE",
+    characterLabel: "一歩出るキャラ",
+    emotionalCopy: "待つだけじゃなく、自分から恋を動かせる人。",
+    shareCopy: "私はたぶん、一歩出るキャラ。",
+    nightCopy: "自分から動けるあなたは、恋を前に進める力があります。",
+    compatibility: {
+      easy: ["GLOW", "FLOW", "GROW"],
+      growth: ["WAIT", "PACE", "HUSH"],
+      careful: ["LOOP", "SWAY", "SEEK"],
+      description: "一歩出るキャラは、関係を前に進める力があります。待ち型の相手とは良いきっかけを作れますが、相手のペースを置いていかないことが大切です。",
+    },
+    shareTemplate: {
+      title: "MOVE｜一歩出るキャラ",
+      body: "待つだけじゃなく、自分から動ける。\nその一歩が、恋を前に進めることもある。\nでも、ひとりで背負いすぎなくていい。",
+      saveText: "自分から動けるけど疲れやすい人へ。",
+      cta: "あなたの恋愛キャラも見てみて。",
+    },
+  },
+  AIPO: {
+    displayCode: "SWAY",
+    characterLabel: "揺れキャラ",
+    emotionalCopy: "行きたい。引きたい。好きだからこそ、心が何度も揺れる人。",
+    shareCopy: "私はたぶん、揺れキャラ。",
+    nightCopy: "揺れるのは、本気で大切にしたい気持ちがあるからです。",
+    compatibility: {
+      easy: ["CALM", "EASE", "TACT"],
+      growth: ["GLOW", "FLOW", "GROW"],
+      careful: ["SPIN", "LOOP", "READ"],
+      description: "揺れキャラは、落ち着いた相手といると気持ちを整えやすいです。不安が重なりやすい相手とは、送る前に一呼吸置くルールがあると安心です。",
+    },
+    shareTemplate: {
+      title: "SWAY｜揺れキャラ",
+      body: "送りたい。\nでも怖い。\n行きたい気持ちと引きたい気持ちの間で、\n何度も揺れる夜がある。",
+      saveText: "恋愛で気持ちが揺れやすい人へ。",
+      cta: "これ私かもと思ったら保存。",
+    },
+  },
+  AIPS: {
+    displayCode: "FLOW",
+    characterLabel: "進め上手キャラ",
+    emotionalCopy: "自然に動ける。でも、本当はちゃんと空気を見ている人。",
+    shareCopy: "私はたぶん、進め上手キャラ。",
+    nightCopy: "うまく進めようとしすぎず、あなたの自然さも大切にしていい。",
+    compatibility: {
+      easy: ["MOVE", "GLOW", "GROW"],
+      growth: ["WAIT", "PACE", "HUSH"],
+      careful: ["SEEK", "LOOP", "PING"],
+      description: "進め上手キャラは、自然に流れを作れるタイプです。相手が不安になりやすい場合は、軽い安心感を添えると関係が進みやすくなります。",
+    },
+    shareTemplate: {
+      title: "FLOW｜進め上手キャラ",
+      body: "自然に会話を広げられる。\nでも実は、ちゃんと空気も見ている。\nその自然さは、恋を進める力になる。",
+      saveText: "自然に距離を縮めたい人へ。",
+      cta: "診断結果をストーリーに載せてもOK。",
+    },
+  },
+  ACNO: {
+    displayCode: "SEEK",
+    characterLabel: "確認したいキャラ",
+    emotionalCopy: "好きだから、曖昧なままでは不安になる人。",
+    shareCopy: "私はたぶん、確認したいキャラ。",
+    nightCopy: "確かめたい気持ちは悪くありません。伝え方を整えれば大丈夫。",
+    compatibility: {
+      easy: ["EASE", "TACT", "GLOW"],
+      growth: ["CALM", "GROW", "FLOW"],
+      careful: ["LOOP", "HUSH", "READ"],
+      description: "確認したいキャラは、曖昧さをやさしくほどいてくれる相手だと安心できます。確認が強くなりすぎると、相手が引いてしまうことがあるので、言い方を整えることが大切です。",
+    },
+    shareTemplate: {
+      title: "SEEK｜確認したいキャラ",
+      body: "好きだから、確かめたくなる。\n曖昧なままだと、不安になる。\n確認したい気持ちは、悪いものじゃない。",
+      saveText: "相手の気持ちを確認したくなる人へ。",
+      cta: "送る前に見返せるように保存。",
+    },
+  },
+  ACNS: {
+    displayCode: "GLOW",
+    characterLabel: "素直安定キャラ",
+    emotionalCopy: "素直に好きでいられて、でもちゃんと落ち着ける人。",
+    shareCopy: "私はたぶん、素直安定キャラ。",
+    nightCopy: "その素直さは、恋の中でもちゃんと魅力になります。",
+    compatibility: {
+      easy: ["CALM", "EASE", "FLOW"],
+      growth: ["WAIT", "MOVE", "GROW"],
+      careful: ["LOOP", "READ", "SEEK"],
+      description: "素直安定キャラは、恋愛の温度感が安定しているタイプです。多くのタイプと合わせやすいですが、相手に合わせすぎて自分の違和感を見逃さないようにしてください。",
+    },
+    shareTemplate: {
+      title: "GLOW｜素直安定キャラ",
+      body: "素直に好きでいられて、\nでも感情だけでぶつけすぎない。\nその安定感は、ちゃんと魅力。",
+      saveText: "素直さと落ち着きを大事にしたい人へ。",
+      cta: "あなたの恋愛キャラも診断してみて。",
+    },
+  },
+  ACPO: {
+    displayCode: "LOOP",
+    characterLabel: "空回りキャラ",
+    emotionalCopy: "大切にしたいほど、不安が先に走ってしまう人。",
+    shareCopy: "私はたぶん、空回りキャラ。",
+    nightCopy: "空回りするのは、ダメだからじゃない。大切にしたい気持ちが大きいだけ。",
+    compatibility: {
+      easy: ["CALM", "EASE", "GLOW"],
+      growth: ["TACT", "FLOW", "GROW"],
+      careful: ["SEEK", "READ", "SWAY"],
+      description: "空回りキャラは、安心感をくれる相手といると落ち着きやすいです。不安が強く出る相手同士だと、お互いに確認や深読みが増えやすいので、送る前の一呼吸が大切です。",
+    },
+    shareTemplate: {
+      title: "LOOP｜空回りキャラ",
+      body: "大切にしたいほど、不安が先に走る。\n確認したくなるのも、追いかけたくなるのも、\nちゃんと好きだから。",
+      saveText: "不安で空回りしやすい人へ。",
+      cta: "これ私すぎると思ったら保存。",
+    },
+  },
+  ACPS: {
+    displayCode: "GROW",
+    characterLabel: "育て上手キャラ",
+    emotionalCopy: "その場の気持ちだけじゃなく、関係をちゃんと育てたい人。",
+    shareCopy: "私はたぶん、育て上手キャラ。",
+    nightCopy: "ちゃんと進めたいあなたは、恋を雑に扱わない人です。",
+    compatibility: {
+      easy: ["GLOW", "FLOW", "EASE"],
+      growth: ["WAIT", "MOVE", "SEEK"],
+      careful: ["LOOP", "HUSH", "PING"],
+      description: "育て上手キャラは、関係を長く育てる視点があります。不安が強い相手にも寄り添えますが、全部背負いすぎないことが大切です。",
+    },
+    shareTemplate: {
+      title: "GROW｜育て上手キャラ",
+      body: "恋をその場の感情だけで終わらせない。\nちゃんと関係として育てたい。\nそのまじめさは、あなたの強さ。",
+      saveText: "ちゃんと関係を育てたい人へ。",
+      cta: "診断結果をスクショして保存してね。",
+    },
+  },
+};
+
+export const loveCharacters: LoveCharacter[] = baseLoveCharacters.map((character) => ({
+  ...character,
+  ...loveCharacterExtras[character.code],
+}));
+
+export const getLoveCharacter = (code?: string) => {
+  const normalized = code?.toUpperCase();
+  return loveCharacters.find((character) => character.code === normalized || character.displayCode === normalized);
+};
+
+export const getCharacterHref = (character: LoveCharacter) => `/types/${character.displayCode.toLowerCase()}`;
